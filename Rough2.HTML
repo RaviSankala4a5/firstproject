@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking Summary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #4e73df, #1cc88a);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .booking-card {
+            background: #fff;
+            width: 420px;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .booking-card h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4e73df;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 9px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #4e73df;
+        }
+
+        .amount-box {
+            background: #f8f9fc;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .amount-box p {
+            display: flex;
+            justify-content: space-between;
+            margin: 6px 0;
+            font-weight: bold;
+        }
+
+        .btn-pay {
+            width: 100%;
+            margin-top: 18px;
+            padding: 12px;
+            background: #1cc88a;
+            border: none;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .btn-pay:hover {
+            background: #17a673;
+        }
+    </style>
+</head>
+<body>
+
+<div class="booking-card">
+    <h2>Booking Summary</h2>
+
+    <form action="/proceed-to-pay" method="post">
+
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" name="username" placeholder="Enter full name" required>
+        </div>
+
+        <div class="form-group">
+    <label>Phone Number</label>
+    <input type="text"
+           id="phone"
+           name="userPhone"
+           maxlength="10"
+           oninput="onlyNumbers(this, 10)"
+           placeholder="Enter 10-digit phone number"
+           required>
+</div>
+
+        <div class="form-group">
+    <label>Aadhaar Card Number</label>
+    <input type="text"
+           id="aadhaar"
+           name="adharCard"
+           maxlength="12"
+           oninput="onlyNumbers(this, 12)"
+           placeholder="Enter 12-digit Aadhaar"
+           required>
+</div>
+        <div class="form-group">
+            <label>Room Type</label>
+            <select name="roomType" required>
+                <option value="">Select Room Type</option>
+                <option value="Single">Single</option>
+                <option value="Double">Double</option>
+                <option value="Triple">Triple</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Check-in Date</label>
+            <input type="date" name="checkinDate" required>
+        </div>
+
+        <div class="form-group">
+            <label>Monthly Rent (₹)</label>
+            <input id="rent" type="number" name="monthlyRent" placeholder="Auto-calculated" readonly>
+        </div>
+
+        <div class="form-group">
+            <label>Deposit Amount (₹)</label>
+            <input id="deposit" type="number" name="deposit" placeholder="Enter deposit" required>
+        </div>
+
+        <div class="amount-box">
+            <p>
+                <span>Total Payable</span>
+                <span>₹ <strong>---</strong></span>
+            </p>
+        </div>
+
+        <button type="submit" class="btn-pay">Proceed to Pay</button>
+
+    </form>
+</div>
+<script>
+    function validateForm() {
+
+        const phone = document.querySelector('input[name="userPhone"]').value;
+        const aadhaar = document.querySelector('input[name="adharCard"]').value;
+
+        // Check phone number contains only digits
+        if (!/^\d+$/.test(phone)) {
+            alert("Phone number should contain only numbers");
+            return false;
+        }
+
+        // Phone number must be 10 digits
+        if (phone.length !== 10) {
+            alert("Phone number must be exactly 10 digits");
+            return false;
+        }
+
+        // Check Aadhaar contains only digits
+        if (!/^\d+$/.test(aadhaar)) {
+            alert("Aadhaar number should contain only numbers");
+            return false;
+        }
+
+        // Aadhaar must be 12 digits
+        if (aadhaar.length !== 12) {
+            alert("Aadhaar number must be exactly 12 digits");
+            return false;
+        }
+
+        // If all validations pass
+        return true;
+    }
+   
+
+
+</script>
+
+</body>
+</html>
